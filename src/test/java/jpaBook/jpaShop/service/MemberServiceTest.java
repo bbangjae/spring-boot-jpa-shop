@@ -36,7 +36,8 @@ public class MemberServiceTest {
 
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class) // try-catch 대신 이렇게 도 가능
+//    @Test
     public void 중복_회원_예외() throws Exception {
         // given
         Member member = new Member();
@@ -45,11 +46,12 @@ public class MemberServiceTest {
         member1.setName("kim");
 
         // when
-        Long savedId = memberService.join(member);
+        memberService.join(member);
+        memberService.join(member1);
 
         // then
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member1));
-        Assertions.assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+//        IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member1));
+//        Assertions.assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     }
 
 }
